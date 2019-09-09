@@ -1,0 +1,105 @@
+<html>
+<meta charset="UTF-8" />
+<head>
+<title>Плавная навигация "Go To" на одностраничном сайте</title>
+<style type="text/css">
+html, body, #page-one, #page-two, #page-three, #page-four {
+  height:100%;
+}
+
+#page-one, #page-two, #page-three, #page-four {padding-top:2em;}
+
+#mainNav {
+  background-color: #668AE4;
+  color: #ddd;
+  line-height:4em;
+  padding:0 1em;
+  position:fixed; 
+  top: 0em; 
+  width:100%; 
+  display:none;
+}
+
+a, a:link, a:visited, a:hover, a:active {
+  color:#eee; 
+  text-decoration:none;
+  display:inline-block;
+  padding:0 1em;
+}
+
+a:hover {color: #4861A2;}
+
+h2 {font-size:3em; padding-top:1em; text-align:center;}
+
+#page-one {background-color:#fff;}
+#page-two {background-color:#ccc;}
+#page-three {background-color:#aaa;}
+#page-four {background-color:#888;}
+
+
+</style>
+</head>
+<body>
+<div id="header"></div>
+<nav id="mainNav">Перейти на: 
+  <a href="#page-one">Главная</a>|
+  <a href="#page-two">О нас</a>|
+  <a href="#page-three">Новости</a>|
+  <a href="#page-four">Контакты</a>
+</nav>
+
+<div id="page-one">
+  <h2>Простой пример<br>
+    плавной навигации<br>
+	"Главная"
+  </h2>
+</div>
+<div id="page-two">
+  <h2>О нас</h2>
+</div>
+<div id="page-three">
+  <h2>Новости</h2>
+</div>
+<div id="page-four">
+  <h2>Контакты</h2>
+</div>
+
+</body>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+$(document).ready(function() {
+        var headerTop = $('#header').offset().top;
+        var headerBottom = headerTop + 420; // Sub-menu should appear after this distance from top.
+        $(window).scroll(function () {
+            var scrollTop = $(window).scrollTop(); // Current vertical scroll position from the top
+            if (scrollTop > headerBottom) { // Check to see if we have scrolled more than headerBottom
+                if (($("#mainNav").is(":visible") === false)) {
+                    $('#mainNav').fadeIn('slow');
+                }
+            } else {
+                if ($("#mainNav").is(":visible")) {
+                    $('#mainNav').hide();
+                }
+            }
+        });
+    });
+
+$(document).ready(function() {
+   $('a[href*=#]').bind('click', function(e) {
+	e.preventDefault();
+       
+	var target = $(this).attr("href");
+			
+	$('html, body').stop().animate({ scrollTop: $(target).offset().top}, 500, function() {
+	     location.hash = target;
+	});
+			
+	return false;
+   });
+});
+
+
+
+
+</script>
+</html>
